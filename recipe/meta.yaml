@@ -1,13 +1,13 @@
 {% set name = "opentelemetry-instrumentation-asgi" %}
-{% set version = "0.36b0" %}
+{% set version = "0.52b1" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/opentelemetry_instrumentation_asgi-{{ version }}.tar.gz
-  sha256: 6a271d895d5eae4d98484be60abbc407871bf0dfd1dcfe916f38bf0260e79757
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/opentelemetry_instrumentation_asgi-{{ version }}.tar.gz
+  sha256: a6dbce9cb5b2c2f45ce4817ad21f44c67fd328358ad3ab911eb46f0be67f82ec
 
 build:
   noarch: python
@@ -16,33 +16,32 @@ build:
 
 requirements:
   host:
-    - python >=3.7
+    - python
     - pip
     - hatchling
   run:
-    - python >=3.7
-    - asgiref >=3.0,<4.dev0
-    - opentelemetry-api >=1.12,<2.dev0
-    - opentelemetry-instrumentation
-    - opentelemetry-semantic-conventions
-    - opentelemetry-util-http 
+    - python
+    - asgiref ~=3.0
+    - opentelemetry-api ~=1.12
+    - opentelemetry-instrumentation ==0.52b1
+    - opentelemetry-semantic-conventions ==0.52b1
+    - opentelemetry-util-http ==0.52b1
 
 test:
   imports:
     - opentelemetry
-    - opentelemetry.instrumentation
+    - opentelemetry.instrumentation.asgi
   commands:
     - pip check
   requires:
     - pip
+    - python
 
 about:
   home: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation/opentelemetry-instrumentation-asgi
   summary: ASGI instrumentation for OpenTelemetry
   license: Apache-2.0
   license_file: LICENSE
-  dev_url: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation/opentelemetry-instrumentation-asgi
-  doc_url: https://github.com/open-telemetry/opentelemetry-python-contrib/blob/main/instrumentation/opentelemetry-instrumentation-asgi/README.rst
 
 extra:
   anaconda-services:
@@ -51,4 +50,9 @@ extra:
   recipe-maintainers:
     - ianaobi
   recipe-maintainers:
+    - rxm7706
     - mariusvniekerk
+    - conda-forge/opentelemetry-instrumentation
+    - conda-forge/opentelemetry-api
+    - conda-forge/opentelemetry-semantic-convention
+    - conda-forge/opentelemetry-util-http
