@@ -1,13 +1,13 @@
 {% set name = "opentelemetry-instrumentation-asgi" %}
-{% set version = "0.53b0" %}
+{% set version = "0.41b0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/opentelemetry_instrumentation_asgi-{{ version }}.tar.gz
-  sha256: b82d7cecdd6a4239ee87e1c629bfd7dae208142ddbb24528d9a9274eb2bc4e44
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/opentelemetry_instrumentation_asgi-{{ version }}.tar.gz
+  sha256: 921244138b37a9a25edf2153f1c248f16f98610ee8d840b25fd7bf6b165e4d72
 
 build:
   noarch: python
@@ -16,26 +16,35 @@ build:
 
 requirements:
   host:
-    - python
+    - python >=3.7
     - pip
     - hatchling
   run:
-    - python
+    - python >=3.7
     - asgiref ~=3.0
     - opentelemetry-api ~=1.12
-    - opentelemetry-instrumentation ==0.53b0
-    - opentelemetry-semantic-conventions ==0.53b0
-    - opentelemetry-util-http ==0.53b0
+    - opentelemetry-instrumentation ==0.41b0
+    - opentelemetry-semantic-conventions ==0.41b0
+    - opentelemetry-util-http ==0.41b0
+    # - opentelemetry-test-utils ==0.37b0
+    # - opentelemetry-instrumentation-asgi 
+    # - opentelemetry-test-utils ==0.38b0
+    # - opentelemetry-instrumentation-asgi 
+    # - opentelemetry-test-utils ==0.39b0
+    # - opentelemetry-instrumentation-asgi 
+    # - opentelemetry-test-utils ==0.40b0
+    # - opentelemetry-instrumentation-asgi 
+    # - opentelemetry-test-utils ==0.41b0
+    # - opentelemetry-instrumentation-asgi 
 
 test:
   imports:
     - opentelemetry
-    - opentelemetry.instrumentation.asgi
+    - opentelemetry.instrumentation
   commands:
     - pip check
   requires:
     - pip
-    - python
 
 about:
   home: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation/opentelemetry-instrumentation-asgi
@@ -49,11 +58,5 @@ extra:
     reason: Dependency for chromadb
   recipe-maintainers:
     - ianaobi
-    - bkreider
   recipe-maintainers:
-    - rxm7706
     - mariusvniekerk
-    - conda-forge/opentelemetry-instrumentation
-    - conda-forge/opentelemetry-api
-    - conda-forge/opentelemetry-semantic-convention
-    - conda-forge/opentelemetry-util-http
