@@ -1,40 +1,41 @@
 {% set name = "opentelemetry-instrumentation-asgi" %}
-{% set version = "0.36b0" %}
+{% set version = "0.51b0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/opentelemetry_instrumentation_asgi-{{ version }}.tar.gz
-  sha256: 6a271d895d5eae4d98484be60abbc407871bf0dfd1dcfe916f38bf0260e79757
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/opentelemetry_instrumentation_asgi-{{ version }}.tar.gz
+  sha256: b3fe97c00f0bfa934371a69674981d76591c68d937b6422a5716ca21081b4148
 
 build:
   noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
 
 requirements:
   host:
-    - python >=3.7
+    - python
     - pip
     - hatchling
   run:
-    - python >=3.7
-    - asgiref >=3.0,<4.dev0
-    - opentelemetry-api >=1.12,<2.dev0
-    - opentelemetry-instrumentation ==0.36b0
-    - opentelemetry-semantic-conventions ==0.36b0
-    - opentelemetry-util-http ==0.36b0
+    - python
+    - asgiref ~=3.0
+    - opentelemetry-api ~=1.12
+    - opentelemetry-instrumentation ==0.51b0
+    - opentelemetry-semantic-conventions ==0.51b0
+    - opentelemetry-util-http ==0.51b0
 
 test:
   imports:
     - opentelemetry
-    - opentelemetry.instrumentation
+    - opentelemetry.instrumentation.asgi
   commands:
     - pip check
   requires:
     - pip
+    - python
 
 about:
   home: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation/opentelemetry-instrumentation-asgi
@@ -43,5 +44,16 @@ about:
   license_file: LICENSE
 
 extra:
+  anaconda-services:
+    ref: https://anaconda.zendesk.com/agent/tickets/70829
+    reason: Dependency for chromadb
   recipe-maintainers:
+    - ianaobi
+    - bkreider
+  recipe-maintainers:
+    - rxm7706
     - mariusvniekerk
+    - conda-forge/opentelemetry-instrumentation
+    - conda-forge/opentelemetry-api
+    - conda-forge/opentelemetry-semantic-convention
+    - conda-forge/opentelemetry-util-http
