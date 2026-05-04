@@ -41,9 +41,17 @@ about:
   dev_url: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation/opentelemetry-instrumentation-asgi
   doc_url: https://opentelemetry.io/docs/
   summary: ASGI instrumentation for OpenTelemetry
+  description: |
+    OpenTelemetry instrumentation for ASGI applications. Wraps an ASGI
+    callable to automatically generate spans for incoming requests,
+    propagate trace context, and emit standard HTTP semantic-convention
+    attributes. Used by other instrumentation plugins (e.g. FastAPI) and
+    can be applied directly to any ASGI framework.
   license: Apache-2.0
   license_family: APACHE
   license_file: LICENSE
+  doc_url: https://opentelemetry-python-contrib.readthedocs.io/en/latest/instrumentation/asgi/asgi.html
+  dev_url: https://github.com/open-telemetry/opentelemetry-python-contrib
 
 extra:
   recipe-maintainers:
