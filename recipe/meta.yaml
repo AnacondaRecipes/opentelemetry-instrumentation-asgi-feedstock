@@ -50,8 +50,6 @@ about:
   license: Apache-2.0
   license_family: APACHE
   license_file: LICENSE
-  doc_url: https://opentelemetry-python-contrib.readthedocs.io/en/latest/instrumentation/asgi/asgi.html
-  dev_url: https://github.com/open-telemetry/opentelemetry-python-contrib
 
 extra:
   recipe-maintainers:
