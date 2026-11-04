@@ -1,5 +1,5 @@
 {% set name = "opentelemetry-instrumentation-asgi" %}
-{% set version = "0.64b0" %}
+{% set version = "0.66b1" %}
 
 package:
   name: {{ name }}
@@ -7,12 +7,18 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/opentelemetry_instrumentation_asgi-{{ version }}.tar.gz
-  sha256: 4dd3eee566a4303f8e6b9b84f2a0a7abc57a6640df768926c68a3868bf5b2090
+  sha256: 78cdc5e45e897e16a8dac9d282e8d5bdf9af2d58e1313fa0bdd4a134c6f9dafc
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation  # [not win]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --no-compile  # [win]
   skip: true  # [py<310]
+  # Skip compiling byte code to avoid extremely long paths in the conda package cache
+  # Due to the nested structure of this package and the long build string, environments
+  # can exceed the Windows path limit if installed into LOCALAPPDATA
+  skip_compile_pyc:  # [win]
+    - "*"            # [win]
 
 requirements:
   host:
@@ -27,18 +33,24 @@ requirements:
     - opentelemetry-semantic-conventions =={{ version }}
     - opentelemetry-util-http =={{ version }}
 
+# tests/test_asgi_middleware.py and tests/test_asgi_custom_headers.py require opentelemetry-test-utils,
+# which is not in the main channel yet; only tests/test_getter.py is runnable.
 test:
+  source_files:
+    - tests
   imports:
     - opentelemetry
     - opentelemetry.instrumentation.asgi
   requires:
     - pip
+    - pytest
   commands:
     - pip check
+    - pytest -vv tests/test_getter.py
 
 about:
   home: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation/opentelemetry-instrumentation-asgi
-  dev_url: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation/opentelemetry-instrumentation-asgi
+  dev_url: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/v0.66b1/instrumentation/opentelemetry-instrumentation-asgi
   doc_url: https://opentelemetry.io/docs/
   summary: ASGI instrumentation for OpenTelemetry
   description: |
